@@ -22,7 +22,8 @@ export default class HomePage extends Component {
 		});
 	}
 
-	linkThrough() {
+	linkThrough(event) {
+		event.preventDefault();
 		if (this.state.charName !== null) {
 			window.location = "/char/" + this.state.charName;
 		}
@@ -32,8 +33,8 @@ export default class HomePage extends Component {
 		return (
 			<Container>
 				<Paper className="rootPaperMain">
-					<Stack>
-						<FormControl>
+					<form onSubmit={this.linkThrough}>
+						<Stack>
 							<TextField
 								onChange={this.changeValue}
 								id="outlined-basic"
@@ -45,8 +46,8 @@ export default class HomePage extends Component {
 							<Button variant="outlined" onClick={this.linkThrough}>
 								Check raidscore
 							</Button>
-						</FormControl>
-					</Stack>
+						</Stack>
+					</form>
 				</Paper>
 			</Container>
 		);

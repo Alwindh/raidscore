@@ -11,6 +11,7 @@ export default function MyComponent(props) {
 	const [loading, setLoading] = useState(true);
 	const [runner, setRunner] = useState(1);
 	const [foundRaids, setFoundRaids] = useState([]);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const loadData = async () => {
 		const targetUrl =
@@ -100,9 +101,15 @@ export default function MyComponent(props) {
 	};
 
 	const asyncRequest = async (targetUrl) => {
-		const response = await axios.get(targetUrl).then(async (response) => {
-			return response.data;
-		});
+		const response = await axios
+			.get(targetUrl)
+			.then(async (response) => {
+				return response.data;
+			})
+			.catch(function (error) {
+				console.log(error.message);
+				setErrorMessage("Could not retrieve data for " + charName);
+			});
 		return response;
 	};
 
@@ -148,6 +155,7 @@ export default function MyComponent(props) {
 		<Container>
 			<Paper className="rootPaperMain">
 				<h1>{charName.charAt(0).toUpperCase() + charName.slice(1)}</h1>
+				{!loading ? "" : <h3>{pageStatus + runner}</h3>}
 				{!loading ? "" : <h3>{pageStatus + runner}</h3>}
 				{<RaidAccordion foundRaids={foundRaids} />}
 			</Paper>
