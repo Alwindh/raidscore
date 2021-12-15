@@ -39,7 +39,6 @@ export default function MyComponent(props) {
 				setRunner(testRunner);
 				setFoundRaids((foundRaids) => [...foundRaids, raidElement]);
 				testRunner++;
-				console.log(element);
 			})
 		);
 		setLoading(false);
@@ -50,6 +49,7 @@ export default function MyComponent(props) {
 		const buffScore = await checkBuffs(raidInfo);
 		raidInfo["enchantScore"] = enchantScore;
 		raidInfo["buffScore"] = buffScore;
+		console.log(raidInfo);
 		return raidInfo;
 		// console.log("");
 		// console.log(raidInfo);
@@ -108,13 +108,36 @@ export default function MyComponent(props) {
 
 	const checkEnchants = (raidInfo) => {
 		const enchantGear = [0, 2, 4, 6, 7, 8, 9, 14, 15];
-		var enchanted = 0;
+		const enchantArray = {
+			0: "Head",
+			1: "Neck",
+			2: "Shoulder",
+			3: "Shirt",
+			4: "Chest",
+			5: "Waist",
+			6: "Legs",
+			7: "Feet",
+			8: "Wrist",
+			9: "Hands",
+			10: "Finger 1",
+			11: "Finger 2",
+			12: "Trinket 1",
+			13: "Trinket 2",
+			14: "Back",
+			15: "Main hand",
+			16: "Off hand",
+			17: "Ranged",
+		};
+		var enchantsMissing = {};
+		var enchantsFound = {};
 		enchantGear.forEach((element) => {
 			if (raidInfo.gear[element]["permanentEnchant"]) {
-				enchanted++;
+				enchantsFound[enchantArray[element]] = raidInfo.gear[element]["permanentEnchant"];
+			} else {
+				enchantsMissing[enchantArray[element]] = "Missing";
 			}
 		});
-		return enchanted;
+		return enchantsMissing;
 	};
 
 	useEffect(() => {
@@ -123,7 +146,7 @@ export default function MyComponent(props) {
 
 	return (
 		<Container>
-			<Paper>
+			<Paper className="rootPaperMain">
 				<h1>{charName.charAt(0).toUpperCase() + charName.slice(1)}</h1>
 				{!loading ? "" : <h3>{pageStatus + runner}</h3>}
 				{<RaidAccordion foundRaids={foundRaids} />}

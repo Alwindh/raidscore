@@ -17,6 +17,33 @@ export default function SimpleAccordion(props) {
 		return t.toUTCString();
 	};
 
+	const printMissingEnchants = (raid) => {
+		var missingEnchants = [];
+		for (var key in raid.enchantScore) {
+			missingEnchants.push(key);
+		}
+		return missingEnchants.map((enchant) => {
+			return (
+				<Grid item>
+					<Stack>
+						{/* <img
+							width="64"
+							height="64"
+							alt=""
+							src={
+								"https://static.wikia.nocookie.net/wowpedia/images/b/b7/Ui-paperdoll-slot-" +
+								enchant.charAt(0).toLowerCase() +
+								enchant.slice(1) +
+								".png"
+							}
+						/>{" "} */}
+						<h5>{enchant}</h5>
+					</Stack>
+				</Grid>
+			);
+		});
+	};
+
 	const buildAccordion = () => {
 		const myData = []
 			.concat(props.foundRaids)
@@ -39,15 +66,15 @@ export default function SimpleAccordion(props) {
 										<div>{convertTime(raid.startTime)}</div>
 									</Stack>
 								</Grid>
-								<Grid item xs={3}>
+								<Grid item xs={2}>
 									<Stack>
 										<div>
 											<h4>Enchants</h4>
 										</div>
-										<div>{raid.enchantScore} / 9</div>
+										<div>{9 - Object.keys(raid.enchantScore).length} / 9</div>
 									</Stack>
 								</Grid>
-								<Grid item xs={3}>
+								<Grid item xs={2}>
 									<Stack>
 										<div>
 											<h4>Buffs</h4>
@@ -55,23 +82,41 @@ export default function SimpleAccordion(props) {
 										<div>{raid.buffScore} / 3</div>
 									</Stack>
 								</Grid>
+								<Grid item xs={3}>
+									<Stack>
+										<div>
+											<h4>Bracket Parse</h4>
+										</div>
+										<div>{raid.percentile.toString().split(".")[0]} / 100</div>
+									</Stack>
+								</Grid>
 							</Grid>
 						</Box>
 					</AccordionSummary>
 					<AccordionDetails>
-						<a
-							rel="noreferrer"
-							href={
-								"https://classic.warcraftlogs.com/reports/" +
-								raid.reportID +
-								"#fight=" +
-								raid.fightID +
-								"&type=summary"
-							}
-							target="_blank"
-						>
-							View raid on Warcraftlogs
-						</a>
+						<Stack>
+							<Box>
+								<Stack>
+									<h4>Enchants Missing:</h4>
+									<Grid container spacing={2}>
+										{printMissingEnchants(raid)}
+									</Grid>
+								</Stack>
+							</Box>
+							<a
+								rel="noreferrer"
+								href={
+									"https://classic.warcraftlogs.com/reports/" +
+									raid.reportID +
+									"#fight=" +
+									raid.fightID +
+									"&type=summary"
+								}
+								target="_blank"
+							>
+								View raid on Warcraftlogs
+							</a>
+						</Stack>
 					</AccordionDetails>
 				</Accordion>
 			);

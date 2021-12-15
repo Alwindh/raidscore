@@ -15,11 +15,9 @@ export default function ButtonAppBar() {
 					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						<Link variant="h5" underline="none" color="#fff" component="button">
-							Home
-						</Link>
-					</Typography>
+					<Link variant="h5" underline="none" color="#fff" href="/">
+						Home
+					</Link>
 				</Toolbar>
 			</AppBar>
 		</Box>
