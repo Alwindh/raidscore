@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiPaper-root{
+    padding:1em
+}
