@@ -108,7 +108,8 @@ export default function MyComponent(props) {
 			})
 			.catch(function (error) {
 				console.log(error.message);
-				setErrorMessage("Could not retrieve data for " + charName);
+				setErrorMessage("Could not retrieve data for " + charName.charAt(0).toUpperCase() + charName.slice(1));
+				setLoading(false);
 			});
 		return response;
 	};
@@ -156,7 +157,7 @@ export default function MyComponent(props) {
 			<Paper className="rootPaperMain">
 				<h1>{charName.charAt(0).toUpperCase() + charName.slice(1)}</h1>
 				{!loading ? "" : <h3>{pageStatus + runner}</h3>}
-				{!loading ? "" : <h3>{pageStatus + runner}</h3>}
+				{!errorMessage ? "" : <h3>{errorMessage}</h3>}
 				{<RaidAccordion foundRaids={foundRaids} />}
 			</Paper>
 		</Container>
