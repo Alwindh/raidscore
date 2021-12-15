@@ -31,7 +31,7 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<Container>
-				<Paper>
+				<Paper className="rootPaperMain">
 					<Stack>
 						<FormControl>
 							<TextField
